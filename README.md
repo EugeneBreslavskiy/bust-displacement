@@ -4,11 +4,7 @@
 
 ## Demo
 
-[surge.sh](http://vue-three-gltf-model.surge.sh)
-
-## Credits
-
-- Art by [Raul Castillo](https://sketchfab.com/shamysoza)  
+[netlify.com](https://bust-displacement.netlify.com/) 
 
 ## Build Setup
 
