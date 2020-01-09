@@ -171,7 +171,7 @@
                 )
 
                 loader.load(
-                    '/static/models/bust/bbb.glb',
+                    '/static/models/bust/bbb1.glb',
                     ( gltf ) => {
                         gltf.scene.scale.set( 0.2, 0.2, 0.2 )
                         gltf.scene.position.set( 0, -5, 0 )
@@ -230,7 +230,7 @@
                 )
 
                 loader.load(
-                    '/static/models/bust/bbb.glb',
+                    '/static/models/bust/bbb2.glb',
                     ( gltf ) => {
                         gltf.scene.scale.set( 0.2, 0.2, 0.2 )
                         gltf.scene.position.set( 8, -5, 0 )
