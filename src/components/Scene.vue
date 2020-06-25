@@ -72,32 +72,12 @@
 
                 const light_3 = new THREE.DirectionalLight( 0xdddddd, 0.5 )
                 light_3.position.set( -5, 0, 0 )
-
-                const helper_3 = new THREE.DirectionalLightHelper( light_3, 5 )
-                
-                const light_4 = new THREE.DirectionalLight( 0xdddddd, 0.5 )
-                light_4.position.set( 0, 0, 5 )
-
-                const helper_4 = new THREE.DirectionalLightHelper( light_4, 5 )
-                
-                const light_5 = new THREE.DirectionalLight( 0xdddddd, 0.5 )
-                light_5.position.set( 0, 0, -5 )
-
-                const helper_5 = new THREE.DirectionalLightHelper( light_5, 5 )
-
-                const light_6 = new THREE.DirectionalLight( 0xdddddd, 0.5 )
-                light_6.position.set( 0, -5, 0 )
-
-                const helper_6 = new THREE.DirectionalLightHelper( light_6, 5 )
                 
                 this.scene.add(
                     ambientLight,
-                    light_1, //helper_1,
-                    light_2, //helper_2,
-                    light_3, //helper_3,
-                    //light_4, helper_4,
-                    // light_5, helper_5,
-                    // light_6, helper_6
+                    light_1,
+                    light_2,
+                    light_3,
                 )
             },
             createRenderer() {
@@ -113,65 +93,6 @@
 
                 loader.load(
                     '/static/models/bust/bbb.glb',
-                    ( gltf ) => {
-                        gltf.scene.scale.set( 0.2, 0.2, 0.2 )
-                        gltf.scene.position.set( -8, -5, 0 )
-
-                        let shaderMaterial = new THREE.ShaderMaterial({
-                            uniforms: {
-                                time: {
-                                    type: "f",
-                                    value: 0.0
-                                },
-                                u_texture: {
-                                    type: 't',
-                                    //value: THREE.ImageUtils.loadTexture( '/static/images/metall.jpg' )
-                                    value: gltf.scene.children[0].material.normalMap
-                                }
-                            },
-                            vertexShader: this.vertexShader(),
-                            fragmentShader: this.fragmentShader()
-                        })
-
-                        let material = gltf.scene.children[0].material
-
-                        material.onBeforeCompile = (shader) => {
-                            shader.uniforms.time = { value: 0 };
-                            shader.uniforms.disp = { value: 1 };
-
-                            shader.vertexShader = 'uniform float time;\nuniform float disp;\n' + shader.vertexShader;
-                            shader.vertexShader = shader.vertexShader.replace(
-                                '#include <begin_vertex>',
-                                [
-                                    'float theta = sin( time + position.y*0.25 ) / 8.0;',
-                                    'float c = 1.*cos( theta ) ;',
-                                    'float s = 8.*sin(theta) ;',
-                                    'mat3 m = mat3( c*disp+1.*(1.-disp), 0., s*disp, 0., 1., 0., -s*disp, 0., c*disp+1.*(1.-disp) );',
-                                    //'mat3 m = mat3( 1, 0, 0, 0, 1, 0, 0, 0, 1 );',
-                                    'vec3 transformed = vec3( position ) * m;',
-                                    'vNormal = vNormal * m;'
-                                ].join( '\n' )
-                            );
-
-					        this.shaderMaterial = shader;
-                        }
-                        
-                        //gltf.scene.children[0].material = shaderMaterial
-
-                        //console.log(gltf.scene.children[0].material)
-
-                        this.scene.add(gltf.scene)
-                    },
-                    ( xhr ) => {
-                        console.log( `${( xhr.loaded / xhr.total * 100 )}% loaded` )
-                    },
-                    ( error ) => {
-                        console.error( 'An error happened', error )
-                    },
-                )
-
-                loader.load(
-                    '/static/models/bust/bbb1.glb',
                     ( gltf ) => {
                         gltf.scene.scale.set( 0.2, 0.2, 0.2 )
                         gltf.scene.position.set( 0, -5, 0 )
@@ -206,77 +127,13 @@
                                     'float c = 1.*cos( theta ) ;',
                                     'float s = 8.*sin(theta) ;',
                                     'mat3 m = mat3( c*disp+1.*(1.-disp), 0., s*disp, 0., 1., 0., -s*disp, 0., c*disp+1.*(1.-disp) );',
-                                    //'mat3 m = mat3( 1, 0, 0, 0, 1, 0, 0, 0, 1 );',
                                     'vec3 transformed = vec3( position ) * m;',
                                     'vNormal = vNormal * m;'
                                 ].join( '\n' )
                             );
 
-					        this.shaderMaterial1 = shader;
+					        this.shaderMaterial = shader;
                         }
-                        
-                        //gltf.scene.children[0].material = shaderMaterial
-
-                        //console.log(gltf.scene.children[0].material)
-
-                        this.scene.add(gltf.scene)
-                    },
-                    ( xhr ) => {
-                        console.log( `${( xhr.loaded / xhr.total * 100 )}% loaded` )
-                    },
-                    ( error ) => {
-                        console.error( 'An error happened', error )
-                    },
-                )
-
-                loader.load(
-                    '/static/models/bust/bbb2.glb',
-                    ( gltf ) => {
-                        gltf.scene.scale.set( 0.2, 0.2, 0.2 )
-                        gltf.scene.position.set( 8, -5, 0 )
-
-                        let shaderMaterial = new THREE.ShaderMaterial({
-                            uniforms: {
-                                time: {
-                                    type: "f",
-                                    value: 0.0
-                                },
-                                u_texture: {
-                                    type: 't',
-                                    //value: THREE.ImageUtils.loadTexture( '/static/images/metall.jpg' )
-                                    value: gltf.scene.children[0].material.normalMap
-                                }
-                            },
-                            vertexShader: this.vertexShader(),
-                            fragmentShader: this.fragmentShader()
-                        })
-
-                        let material = gltf.scene.children[0].material
-
-                        material.onBeforeCompile = (shader) => {
-                            shader.uniforms.time = { value: 0 };
-                            shader.uniforms.disp = { value: 1 };
-
-                            shader.vertexShader = 'uniform float time;\nuniform float disp;\n' + shader.vertexShader;
-                            shader.vertexShader = shader.vertexShader.replace(
-                                '#include <begin_vertex>',
-                                [
-                                    'float theta = sin( time + position.y*0.25 ) / 8.0;',
-                                    'float c = 1.*cos( theta ) ;',
-                                    'float s = 8.*sin(theta) ;',
-                                    'mat3 m = mat3( c*disp+1.*(1.-disp), 0., s*disp, 0., 1., 0., -s*disp, 0., c*disp+1.*(1.-disp) );',
-                                    //'mat3 m = mat3( 1, 0, 0, 0, 1, 0, 0, 0, 1 );',
-                                    'vec3 transformed = vec3( position ) * m;',
-                                    'vNormal = vNormal * m;'
-                                ].join( '\n' )
-                            );
-
-					        this.shaderMaterial2 = shader;
-                        }
-                        
-                        //gltf.scene.children[0].material = shaderMaterial
-
-                        //console.log(gltf.scene.children[0].material)
 
                         this.scene.add(gltf.scene)
                     },
@@ -518,30 +375,6 @@
                     this.shaderMaterial.uniforms.disp.value = Math.abs(Math.sin(time) * Math.sin(time) * Math.sin(time) * Math.sin(time))
                 
                 }
-                
-                if ( this.shaderMaterial1 ) {
-
-                    this.shaderMaterial1.uniforms.time.value = performance.now() / 500;
-                    
-                    this.shaderMaterial1.uniforms.disp.value = Math.abs(Math.sin(time) * Math.sin(time) * Math.sin(time) * Math.sin(time))
-
-                }
-
-                if ( this.shaderMaterial2 ) {
-
-                    this.shaderMaterial2.uniforms.time.value = performance.now() / 500;
-                    
-                    this.shaderMaterial2.uniforms.disp.value = Math.abs(Math.sin(time) * Math.sin(time) * Math.sin(time) * Math.sin(time))
-
-                }
-
-
-                // if (this.scene.children[13]) {
-                //     //console.log(this.scene.children[13].children[0].material.uniforms['time'].value)
-                //     this.scene.children[13].children[0].material.uniforms['time'].value = .00025 * ( Date.now() - this.start )
-                // }
-
-                //material.uniforms[ 'time' ].value = .00025 * ( Date.now() - start );
             },
             resizeWindowHandler() {
                 this.camera.aspect = window.innerWidth / window.innerHeight
